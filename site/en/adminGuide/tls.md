@@ -629,3 +629,49 @@ curl --cacert path_to/ca.pem https://localhost:19530/v2/vectordb/collections/lis
 ```bash
 curl --cert path_to/client.pem --key path_to/client.key --cacert path_to/ca.pem https://localhost:19530/v2/vectordb/collections/list
 ```
+
+## Set up a Milvus server with Node TLS
+
+### 1. Modify the Milvus server configuration
+
+To enable node-level TLS, set `common.security.internaltlsEnabled` in `milvus.yaml` to `true`.
+
+```yaml
+proxy:
+  ip: localhost
+
+rootCoord:
+  ip: localhost
+
+dataCoord:
+  ip: localhost
+
+queryCoord:
+  ip: localhost
+
+dataNode:
+  ip: localhost
+
+queryNode:
+  ip: localhost
+
+indexNode:
+  ip: localhost
+
+internaltls:
+  serverPemPath: configs/cert/server.pem
+  serverKeyPath: configs/cert/server.key
+  caPemPath: configs/cert/ca.pem
+
+common:
+  security:
+    internaltlsEnabled: true
+```
+
+Parameters:
+
+- `serverPemPath`: The path to the server certificate file.
+- `serverKeyPath`: The path to the server key file.
+- `caPemPath`: The path to the CA certificate file.
+- `internaltlsEnabled`: The TLS mode for encryption as node level. Valid values: "true","false"
+- `ip`: TCP/IP address of the node
